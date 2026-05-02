@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hansika Beauty Parlor - Degloor, Nanded</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --rose:#c2718b;--rose-light:#f7e6ec;--rose-dark:#8a3f58;
+    --gold:#c9a96e;--ivory:#fdf8f3;--charcoal:#2d2424;--muted:#7a6a6a;
+  }
+  body{font-family:'Jost',sans-serif;background:var(--ivory);color:var(--charcoal);overflow-x:hidden}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:white;border-bottom:1px solid #f0e6eb;position:sticky;top:0;z-index:100}
+  .logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--rose-dark);letter-spacing:1px}
+  .logo span{color:var(--gold);font-style:italic}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;transition:color .3s}
+  .nav-links a:hover{color:var(--rose)}
+  .nav-btn{background:var(--rose);color:white;border:none;padding:.6rem 1.4rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .3s}
+  .nav-btn:hover{background:var(--rose-dark)}
+
+  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:85vh;background:white}
+  .hero-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;position:relative}
+  .hero-text::before{content:'✦';position:absolute;top:3rem;left:3rem;color:var(--gold);font-size:1.2rem;opacity:.5}
+  .eyebrow{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--rose);margin-bottom:1.2rem;font-weight:500}
+  h1{font-family:'Playfair Display',serif;font-size:3.2rem;line-height:1.15;color:var(--charcoal);margin-bottom:1.5rem}
+  h1 em{color:var(--rose);font-style:italic}
+  .hero-desc{color:var(--muted);line-height:1.8;font-size:.95rem;max-width:380px;margin-bottom:2.5rem;font-weight:300}
+  .hero-cta{display:flex;gap:1rem;align-items:center}
+  .btn-primary{background:var(--rose);color:white;border:none;padding:.9rem 2rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .btn-primary:hover{background:var(--rose-dark);transform:translateY(-2px)}
+  .btn-outline{background:transparent;color:var(--rose);border:1.5px solid var(--rose);padding:.9rem 2rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .btn-outline:hover{background:var(--rose-light)}
+  .hero-visual{background:linear-gradient(135deg,#f7e6ec 0%,#fdf0f5 50%,#f9e8d0 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .hero-visual::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(194,113,139,.12);top:-50px;right:-50px}
+  .hero-visual::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(201,169,110,.1);bottom:40px;left:30px}
+  .hero-img-box{width:320px;height:420px;background:white;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(194,113,139,.2);position:relative;z-index:1}
+  .hero-emoji-art{font-size:5rem;text-align:center}
+  .hero-badge{position:absolute;bottom:40px;right:50px;background:white;border-radius:16px;padding:1rem 1.2rem;box-shadow:0 8px 30px rgba(0,0,0,.08);z-index:2}
+  .badge-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--rose);font-weight:600}
+  .badge-txt{font-size:.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+
+  .marquee-bar{background:var(--rose-dark);color:white;padding:.8rem 0;overflow:hidden;white-space:nowrap}
+  .marquee-inner{display:inline-block;animation:marquee 22s linear infinite;font-size:.78rem;letter-spacing:2px;text-transform:uppercase}
+  @keyframes marquee{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+
+  .section{padding:5rem 3rem}
+  .section-header{text-align:center;margin-bottom:3.5rem}
+  .section-eyebrow{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--rose);margin-bottom:.8rem;font-weight:500}
+  h2{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--charcoal)}
+  h2 em{color:var(--gold);font-style:italic}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:960px;margin:0 auto}
+  .service-card{background:white;border-radius:20px;padding:2rem;text-align:center;transition:all .3s;border:1px solid #f0e6eb;cursor:pointer}
+  .service-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(194,113,139,.15)}
+  .service-icon{width:64px;height:64px;border-radius:50%;background:var(--rose-light);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.6rem}
+  .service-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--charcoal);margin-bottom:.5rem}
+  .service-desc{font-size:.82rem;color:var(--muted);line-height:1.7;font-weight:300}
+  .service-price{margin-top:1rem;font-size:.95rem;color:var(--rose);font-weight:500}
+
+  .why-us{background:white;padding:5rem 3rem}
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:900px;margin:0 auto;align-items:center}
+  .why-visual{background:linear-gradient(135deg,#f7e6ec,#fdf0f5);border-radius:24px;height:400px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .big-emoji{font-size:6rem}
+  .stat-pill{position:absolute;background:white;border-radius:50px;padding:.6rem 1.2rem;box-shadow:0 6px 20px rgba(0,0,0,.08);font-size:.78rem;font-weight:500;letter-spacing:.5px}
+  .stat-pill.p1{top:30px;right:20px;color:var(--rose)}
+  .stat-pill.p2{bottom:50px;left:20px;color:var(--charcoal)}
+  .why-points{display:flex;flex-direction:column;gap:1.8rem}
+  .why-point{display:flex;gap:1rem;align-items:flex-start}
+  .why-dot{width:40px;height:40px;border-radius:50%;background:var(--rose-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
+  .why-text h4{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.3rem;color:var(--charcoal)}
+  .why-text p{font-size:.83rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+  .gallery{padding:5rem 3rem;background:var(--ivory)}
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:960px;margin:0 auto}
+  .g-card{border-radius:16px;overflow:hidden;background:white;border:1px solid #f0e6eb}
+  .g-card-top{height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem}
+  .g-card-top.c1{background:linear-gradient(135deg,#f7e6ec,#fde8f1)}
+  .g-card-top.c2{background:linear-gradient(135deg,#fdf0e6,#fde8d0)}
+  .g-card-top.c3{background:linear-gradient(135deg,#e8f3f7,#e0f0f8)}
+  .g-card-top.c4{background:linear-gradient(135deg,#eaf3e6,#ddf2d0)}
+  .g-label{padding:.8rem 1rem;font-size:.8rem;color:var(--muted);text-align:center}
+
+  .testimonials{background:var(--rose-dark);padding:5rem 3rem;color:white}
+  .testimonials .section-eyebrow{color:var(--gold)}
+  .testimonials h2{color:white}
+  .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:960px;margin:0 auto}
+  .t-card{background:rgba(255,255,255,.08);border-radius:16px;padding:1.8rem;border:1px solid rgba(255,255,255,.1)}
+  .stars{color:var(--gold);font-size:.9rem;margin-bottom:.8rem;letter-spacing:2px}
+  .t-quote{font-size:.88rem;line-height:1.8;color:rgba(255,255,255,.85);font-weight:300;margin-bottom:1.2rem}
+  .t-author{display:flex;align-items:center;gap:.8rem}
+  .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--rose-light);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--rose-dark);font-weight:600}
+  .t-name{font-size:.82rem;font-weight:500;color:white}
+  .t-role{font-size:.72rem;color:rgba(255,255,255,.5)}
+
+  .booking{padding:5rem 3rem;background:white;text-align:center}
+  .booking-box{background:linear-gradient(135deg,#f7e6ec,#fdf8f3);border-radius:24px;padding:3.5rem;max-width:600px;margin:0 auto;border:1px solid #f0e6eb}
+  .booking-box h3{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:.8rem}
+  .booking-box p{color:var(--muted);font-size:.9rem;margin-bottom:2rem;font-weight:300}
+  .booking-form{display:flex;flex-direction:column;gap:1rem;text-align:left}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .form-group label{display:block;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+  .form-group input,.form-group select{width:100%;padding:.7rem 1rem;border:1px solid #e8d8e0;border-radius:10px;font-family:'Jost',sans-serif;font-size:.88rem;background:white;color:var(--charcoal);outline:none;transition:border .2s}
+  .form-group input:focus,.form-group select:focus{border-color:var(--rose)}
+  .book-btn{background:var(--rose);color:white;border:none;padding:1rem 2rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s;width:100%;margin-top:.5rem}
+  .book-btn:hover{background:var(--rose-dark);transform:translateY(-2px)}
+
+  footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:3rem;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+  .footer-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:white;margin-bottom:.8rem}
+  .footer-logo span{color:var(--gold);font-style:italic}
+  .footer-tagline{font-size:.82rem;line-height:1.7;font-weight:300;max-width:240px}
+  footer h5{color:white;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;font-weight:500}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+  footer ul a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.82rem;transition:color .2s}
+  footer ul a:hover{color:var(--gold)}
+  .footer-bottom{background:#1e1515;padding:1rem 3rem;font-size:.75rem;color:rgba(255,255,255,.4);display:flex;justify-content:space-between;letter-spacing:.5px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Hansika <span>Beauty Parlor</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-btn">Book Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="eyebrow">✦ Welcome to Hansika Beauty Parlor</p>
+    <h1>Where Beauty <em>Blooms</em> in Degloor</h1>
+    <p class="hero-desc">Degloor's most trusted beauty destination — premium hair, skin, and nail care crafted with love and skill, right in your neighbourhood.</p>
+    <div class="hero-cta">
+      <button class="btn-primary">Book Appointment</button>
+      <button class="btn-outline">View Services</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-box">
+      <div class="hero-emoji-art">💆‍♀️</div>
+    </div>
+    <div class="hero-badge">
+      <div class="badge-num">500+</div>
+      <div class="badge-txt">Happy Clients</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-bar">
+  <span class="marquee-inner">✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp; ✦ Nail Art &nbsp;&nbsp;&nbsp; ✦ Waxing &nbsp;&nbsp;&nbsp; ✦ Bridal Packages &nbsp;&nbsp;&nbsp; ✦ Skin Treatments &nbsp;&nbsp;&nbsp; ✦ Eyebrow Threading &nbsp;&nbsp;&nbsp; ✦ Mehendi &nbsp;&nbsp;&nbsp; ✦ Degloor's Favourite Parlor &nbsp;&nbsp;&nbsp; ✦ Nanded District &nbsp;&nbsp;&nbsp; ✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials</span>
+</div>
+
+<section class="section" style="background:var(--ivory)">
+  <div class="section-header">
+    <p class="section-eyebrow">What We Offer</p>
+    <h2>Our <em>Services</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">💇‍♀️</div>
+      <div class="service-name">Hair Styling</div>
+      <div class="service-desc">Cut, colour, highlights, keratin treatment, and more — tailored to your look.</div>
+      <div class="service-price">From ₹299</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Facial & Skin</div>
+      <div class="service-desc">Deep cleansing, brightening, and anti-aging facials using premium products.</div>
+      <div class="service-price">From ₹499</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💅</div>
+      <div class="service-name">Nail Art</div>
+      <div class="service-desc">Manicure, pedicure, gel nails, and creative nail art designs.</div>
+      <div class="service-price">From ₹249</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌸</div>
+      <div class="service-name">Threading & Waxing</div>
+      <div class="service-desc">Precise eyebrow shaping, upper lip, and full body waxing services.</div>
+      <div class="service-price">From ₹50</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👰</div>
+      <div class="service-name">Bridal Package</div>
+      <div class="service-desc">Complete bridal makeup, mehendi, hair, and glow treatment for your big day.</div>
+      <div class="service-price">From ₹3999</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🕯️</div>
+      <div class="service-name">Spa & Massage</div>
+      <div class="service-desc">Head massage, body scrub, and relaxing spa treatments to de-stress.</div>
+      <div class="service-price">From ₹799</div>
+    </div>
+  </div>
+</section>
+
+<section class="why-us">
+  <div class="why-grid">
+    <div class="why-visual">
+      <div class="big-emoji">🌺</div>
+      <div class="stat-pill p1">⭐ 4.9 Rating</div>
+      <div class="stat-pill p2">✦ Degloor's Trusted Parlor</div>
+    </div>
+    <div>
+      <p class="section-eyebrow" style="margin-bottom:.8rem">Why Choose Us</p>
+      <h2 style="margin-bottom:2rem">You Deserve the <em>Best</em></h2>
+      <div class="why-points">
+        <div class="why-point">
+          <div class="why-dot">🎓</div>
+          <div class="why-text">
+            <h4>Certified Professionals</h4>
+            <p>Our stylists are trained and certified with years of experience in the beauty industry.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-dot">🌿</div>
+          <div class="why-text">
+            <h4>Premium Products Only</h4>
+            <p>We use only top-quality, skin-safe products from trusted brands — no compromises.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-dot">🏠</div>
+          <div class="why-text">
+            <h4>Cosy & Hygienic Space</h4>
+            <p>A clean, comfortable, and welcoming environment where you feel truly at home.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-dot">💰</div>
+          <div class="why-text">
+            <h4>Affordable Pricing</h4>
+            <p>Luxury experience at prices that are friendly to every budget in Degloor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="section-header">
+    <p class="section-eyebrow">Our Work</p>
+    <h2>A Glimpse of <em>Our Craft</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-card"><div class="g-card-top c1">💇‍♀️</div><div class="g-label">Hair Colour</div></div>
+    <div class="g-card"><div class="g-card-top c2">💍</div><div class="g-label">Bridal Glam</div></div>
+    <div class="g-card"><div class="g-card-top c3">💅</div><div class="g-label">Nail Art</div></div>
+    <div class="g-card"><div class="g-card-top c4">🌿</div><div class="g-label">Skin Glow</div></div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-header">
+    <p class="section-eyebrow">Kind Words</p>
+    <h2>What Our <em style="color:var(--gold)">Clients</em> Say</h2>
+  </div>
+  <div class="t-grid">
+    <div class="t-card">
+      <div class="stars">★★★★★</div>
+      <p class="t-quote">"Best parlor in Degloor! My skin felt so fresh after the facial. The staff is super sweet and professional."</p>
+      <div class="t-author">
+        <div class="t-avatar">PR</div>
+        <div><div class="t-name">Priya Rathod</div><div class="t-role">Degloor, Regular Client</div></div>
+      </div>
+    </div>
+    <div class="t-card">
+      <div class="stars">★★★★★</div>
+      <p class="t-quote">"My bridal look was absolutely magical. Hansika Beauty made me feel like a queen on my wedding day!"</p>
+      <div class="t-author">
+        <div class="t-avatar">SK</div>
+        <div><div class="t-name">Sneha Kulkarni</div><div class="t-role">Nanded, Bridal Client</div></div>
+      </div>
+    </div>
+    <div class="t-card">
+      <div class="stars">★★★★★</div>
+      <p class="t-quote">"Affordable, clean, and so talented! The nail art for my function was simply stunning. Highly recommend!"</p>
+      <div class="t-author">
+        <div class="t-avatar">AM</div>
+        <div><div class="t-name">Anjali More</div><div class="t-role">Degloor, Nail Art Client</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking">
+  <div class="booking-box">
+    <h3>Book Your Appointment</h3>
+    <p>Reserve your spot at Hansika Beauty Parlor — we can't wait to pamper you!</p>
+    <div class="booking-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="e.g. Priya Sharma">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 98765 43210">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Service</label>
+          <select>
+            <option>Hair Styling</option>
+            <option>Facial & Skin</option>
+            <option>Nail Art</option>
+            <option>Bridal Package</option>
+            <option>Threading & Waxing</option>
+            <option>Spa & Massage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date">
+        </div>
+      </div>
+      <button class="book-btn">Confirm Appointment</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-logo">Hansika <span>Beauty Parlor</span></div>
+    <p class="footer-tagline">Degloor's trusted neighbourhood beauty parlour — where every visit leaves you glowing.</p>
+  </div>
+  <div>
+    <h5>Quick Links</h5>
+    <ul>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Book Now</a></li>
+    </ul>
+  </div>
+  <div>
+    <h5>Contact</h5>
+    <ul>
+      <li><a href="#">📍 Degloor, Dist. Nanded, Maharashtra</a></li>
+      <li><a href="#">📞 +91 98765 43210</a></li>
+      <li><a href="#">🕐 Mon–Sat 9am–8pm</a></li>
+      <li><a href="#">✉ hansikabeauty@gmail.com</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 Hansika Beauty Parlor. All rights reserved.</span>
+  <span>Made with ❤ in Degloor, Nanded</span>
+</div>
+
+</body>
+</html>
