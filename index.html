@@ -11,70 +11,98 @@
     --rose:#c2718b;--rose-light:#f7e6ec;--rose-dark:#8a3f58;
     --gold:#c9a96e;--ivory:#fdf8f3;--charcoal:#2d2424;--muted:#7a6a6a;
   }
+  html{scroll-behavior:smooth}
   body{font-family:'Jost',sans-serif;background:var(--ivory);color:var(--charcoal);overflow-x:hidden}
-  nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:white;border-bottom:1px solid #f0e6eb;position:sticky;top:0;z-index:100}
-  .logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--rose-dark);letter-spacing:1px}
+
+  /* ===== NAV ===== */
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:white;border-bottom:1px solid #f0e6eb;position:sticky;top:0;z-index:200;transition:box-shadow .3s}
+  nav.scrolled{box-shadow:0 4px 20px rgba(194,113,139,.1)}
+  .logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rose-dark);letter-spacing:1px;flex-shrink:0}
   .logo span{color:var(--gold);font-style:italic}
   .nav-links{display:flex;gap:2rem;list-style:none}
-  .nav-links a{text-decoration:none;color:var(--muted);font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;transition:color .3s}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.82rem;letter-spacing:1.5px;text-transform:uppercase;transition:color .3s}
   .nav-links a:hover{color:var(--rose)}
-  .nav-btn{background:var(--rose);color:white;border:none;padding:.6rem 1.4rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .3s}
+  .nav-btn{background:var(--rose);color:white;border:none;padding:.6rem 1.4rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .3s;white-space:nowrap}
   .nav-btn:hover{background:var(--rose-dark)}
 
-  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:85vh;background:white}
+  /* hamburger */
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.3rem;background:none;border:none}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--charcoal);border-radius:2px;transition:all .35s}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* mobile menu */
+  .mobile-menu{display:none;flex-direction:column;gap:0;background:white;border-top:1px solid #f0e6eb;position:fixed;top:60px;left:0;right:0;z-index:199;padding:1rem 0;box-shadow:0 10px 30px rgba(0,0,0,.08);transform:translateY(-10px);opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}
+  .mobile-menu.open{opacity:1;transform:translateY(0);pointer-events:all}
+  .mobile-menu a{display:block;padding:.9rem 2rem;text-decoration:none;color:var(--charcoal);font-size:.88rem;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid #f9f0f4;transition:background .2s}
+  .mobile-menu a:hover{background:var(--rose-light)}
+  .mobile-menu .mob-book-btn{margin:1rem 2rem;background:var(--rose);color:white;text-align:center;border-radius:50px;border-bottom:none;font-weight:500;padding:1rem 2rem}
+
+  /* ===== HERO ===== */
+  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;background:white}
   .hero-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;position:relative}
   .hero-text::before{content:'✦';position:absolute;top:3rem;left:3rem;color:var(--gold);font-size:1.2rem;opacity:.5}
   .eyebrow{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--rose);margin-bottom:1.2rem;font-weight:500}
-  h1{font-family:'Playfair Display',serif;font-size:3.2rem;line-height:1.15;color:var(--charcoal);margin-bottom:1.5rem}
+  h1{font-family:'Playfair Display',serif;font-size:3rem;line-height:1.15;color:var(--charcoal);margin-bottom:1.5rem}
   h1 em{color:var(--rose);font-style:italic}
-  .hero-desc{color:var(--muted);line-height:1.8;font-size:.95rem;max-width:380px;margin-bottom:2.5rem;font-weight:300}
-  .hero-cta{display:flex;gap:1rem;align-items:center}
-  .btn-primary{background:var(--rose);color:white;border:none;padding:.9rem 2rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .hero-desc{color:var(--muted);line-height:1.8;font-size:.93rem;max-width:380px;margin-bottom:2.5rem;font-weight:300}
+  .hero-cta{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+  .btn-primary{background:var(--rose);color:white;border:none;padding:.9rem 1.8rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s}
   .btn-primary:hover{background:var(--rose-dark);transform:translateY(-2px)}
-  .btn-outline{background:transparent;color:var(--rose);border:1.5px solid var(--rose);padding:.9rem 2rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .btn-outline{background:transparent;color:var(--rose);border:1.5px solid var(--rose);padding:.9rem 1.8rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s}
   .btn-outline:hover{background:var(--rose-light)}
   .hero-visual{background:linear-gradient(135deg,#f7e6ec 0%,#fdf0f5 50%,#f9e8d0 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
   .hero-visual::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(194,113,139,.12);top:-50px;right:-50px}
   .hero-visual::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(201,169,110,.1);bottom:40px;left:30px}
-  .hero-img-box{width:320px;height:420px;background:white;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(194,113,139,.2);position:relative;z-index:1}
+  .hero-img-box{width:280px;height:360px;background:white;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(194,113,139,.2);position:relative;z-index:1}
   .hero-emoji-art{font-size:5rem;text-align:center}
-  .hero-badge{position:absolute;bottom:40px;right:50px;background:white;border-radius:16px;padding:1rem 1.2rem;box-shadow:0 8px 30px rgba(0,0,0,.08);z-index:2}
-  .badge-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--rose);font-weight:600}
-  .badge-txt{font-size:.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+  .hero-badge{position:absolute;bottom:40px;right:40px;background:white;border-radius:16px;padding:.9rem 1.1rem;box-shadow:0 8px 30px rgba(0,0,0,.08);z-index:2}
+  .badge-num{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--rose);font-weight:600}
+  .badge-txt{font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
 
+  /* ===== MARQUEE ===== */
   .marquee-bar{background:var(--rose-dark);color:white;padding:.8rem 0;overflow:hidden;white-space:nowrap}
-  .marquee-inner{display:inline-block;animation:marquee 22s linear infinite;font-size:.78rem;letter-spacing:2px;text-transform:uppercase}
+  .marquee-inner{display:inline-block;animation:marquee 28s linear infinite;font-size:.76rem;letter-spacing:2px;text-transform:uppercase}
   @keyframes marquee{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
 
+  /* ===== SECTIONS ===== */
   .section{padding:5rem 3rem}
   .section-header{text-align:center;margin-bottom:3.5rem}
   .section-eyebrow{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--rose);margin-bottom:.8rem;font-weight:500}
-  h2{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--charcoal)}
+  h2{font-family:'Playfair Display',serif;font-size:2.3rem;color:var(--charcoal)}
   h2 em{color:var(--gold);font-style:italic}
+
+  /* ===== SERVICES ===== */
   .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:960px;margin:0 auto}
   .service-card{background:white;border-radius:20px;padding:2rem;text-align:center;transition:all .3s;border:1px solid #f0e6eb;cursor:pointer}
   .service-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(194,113,139,.15)}
   .service-icon{width:64px;height:64px;border-radius:50%;background:var(--rose-light);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.6rem}
-  .service-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--charcoal);margin-bottom:.5rem}
+  .service-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--charcoal);margin-bottom:.5rem}
   .service-desc{font-size:.82rem;color:var(--muted);line-height:1.7;font-weight:300}
-  .service-price{margin-top:1rem;font-size:.95rem;color:var(--rose);font-weight:500}
+  .service-price{margin-top:1rem;font-size:.93rem;color:var(--rose);font-weight:500}
+  .service-book-btn{margin-top:.8rem;background:none;border:1px solid var(--rose);color:var(--rose);padding:.4rem 1rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.5px;cursor:pointer;transition:all .25s}
+  .service-card:hover .service-book-btn{background:var(--rose);color:white}
 
+  /* ===== WHY US ===== */
   .why-us{background:white;padding:5rem 3rem}
   .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:900px;margin:0 auto;align-items:center}
-  .why-visual{background:linear-gradient(135deg,#f7e6ec,#fdf0f5);border-radius:24px;height:400px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .why-visual{background:linear-gradient(135deg,#f7e6ec,#fdf0f5);border-radius:24px;height:360px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
   .big-emoji{font-size:6rem}
   .stat-pill{position:absolute;background:white;border-radius:50px;padding:.6rem 1.2rem;box-shadow:0 6px 20px rgba(0,0,0,.08);font-size:.78rem;font-weight:500;letter-spacing:.5px}
   .stat-pill.p1{top:30px;right:20px;color:var(--rose)}
-  .stat-pill.p2{bottom:50px;left:20px;color:var(--charcoal)}
-  .why-points{display:flex;flex-direction:column;gap:1.8rem}
+  .stat-pill.p2{bottom:40px;left:20px;color:var(--charcoal)}
+  .why-points{display:flex;flex-direction:column;gap:1.6rem}
   .why-point{display:flex;gap:1rem;align-items:flex-start}
   .why-dot{width:40px;height:40px;border-radius:50%;background:var(--rose-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
   .why-text h4{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.3rem;color:var(--charcoal)}
-  .why-text p{font-size:.83rem;color:var(--muted);line-height:1.7;font-weight:300}
+  .why-text p{font-size:.82rem;color:var(--muted);line-height:1.7;font-weight:300}
 
+  /* ===== GALLERY ===== */
   .gallery{padding:5rem 3rem;background:var(--ivory)}
   .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:960px;margin:0 auto}
-  .g-card{border-radius:16px;overflow:hidden;background:white;border:1px solid #f0e6eb}
+  .g-card{border-radius:16px;overflow:hidden;background:white;border:1px solid #f0e6eb;transition:transform .3s;cursor:pointer}
+  .g-card:hover{transform:scale(1.03)}
   .g-card-top{height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem}
   .g-card-top.c1{background:linear-gradient(135deg,#f7e6ec,#fde8f1)}
   .g-card-top.c2{background:linear-gradient(135deg,#fdf0e6,#fde8d0)}
@@ -82,62 +110,150 @@
   .g-card-top.c4{background:linear-gradient(135deg,#eaf3e6,#ddf2d0)}
   .g-label{padding:.8rem 1rem;font-size:.8rem;color:var(--muted);text-align:center}
 
+  /* ===== TESTIMONIALS ===== */
   .testimonials{background:var(--rose-dark);padding:5rem 3rem;color:white}
   .testimonials .section-eyebrow{color:var(--gold)}
   .testimonials h2{color:white}
   .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:960px;margin:0 auto}
   .t-card{background:rgba(255,255,255,.08);border-radius:16px;padding:1.8rem;border:1px solid rgba(255,255,255,.1)}
   .stars{color:var(--gold);font-size:.9rem;margin-bottom:.8rem;letter-spacing:2px}
-  .t-quote{font-size:.88rem;line-height:1.8;color:rgba(255,255,255,.85);font-weight:300;margin-bottom:1.2rem}
+  .t-quote{font-size:.87rem;line-height:1.8;color:rgba(255,255,255,.85);font-weight:300;margin-bottom:1.2rem}
   .t-author{display:flex;align-items:center;gap:.8rem}
-  .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--rose-light);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--rose-dark);font-weight:600}
+  .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--rose-light);display:flex;align-items:center;justify-content:center;font-size:.72rem;color:var(--rose-dark);font-weight:600;flex-shrink:0}
   .t-name{font-size:.82rem;font-weight:500;color:white}
   .t-role{font-size:.72rem;color:rgba(255,255,255,.5)}
 
+  /* ===== BOOKING ===== */
   .booking{padding:5rem 3rem;background:white;text-align:center}
-  .booking-box{background:linear-gradient(135deg,#f7e6ec,#fdf8f3);border-radius:24px;padding:3.5rem;max-width:600px;margin:0 auto;border:1px solid #f0e6eb}
+  .booking-box{background:linear-gradient(135deg,#f7e6ec,#fdf8f3);border-radius:24px;padding:3rem;max-width:600px;margin:0 auto;border:1px solid #f0e6eb}
   .booking-box h3{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:.8rem}
   .booking-box p{color:var(--muted);font-size:.9rem;margin-bottom:2rem;font-weight:300}
   .booking-form{display:flex;flex-direction:column;gap:1rem;text-align:left}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-  .form-group label{display:block;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;font-weight:500}
-  .form-group input,.form-group select{width:100%;padding:.7rem 1rem;border:1px solid #e8d8e0;border-radius:10px;font-family:'Jost',sans-serif;font-size:.88rem;background:white;color:var(--charcoal);outline:none;transition:border .2s}
+  .form-group label{display:block;font-size:.73rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+  .form-group input,.form-group select{width:100%;padding:.75rem 1rem;border:1px solid #e8d8e0;border-radius:10px;font-family:'Jost',sans-serif;font-size:.88rem;background:white;color:var(--charcoal);outline:none;transition:border .2s;-webkit-appearance:none;appearance:none}
   .form-group input:focus,.form-group select:focus{border-color:var(--rose)}
   .book-btn{background:var(--rose);color:white;border:none;padding:1rem 2rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s;width:100%;margin-top:.5rem}
   .book-btn:hover{background:var(--rose-dark);transform:translateY(-2px)}
 
+  /* ===== FOOTER ===== */
   footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:3rem;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
   .footer-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:white;margin-bottom:.8rem}
   .footer-logo span{color:var(--gold);font-style:italic}
   .footer-tagline{font-size:.82rem;line-height:1.7;font-weight:300;max-width:240px}
-  footer h5{color:white;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;font-weight:500}
+  footer h5{color:white;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;font-weight:500}
   footer ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
-  footer ul a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.82rem;transition:color .2s}
-  footer ul a:hover{color:var(--gold)}
-  .footer-bottom{background:#1e1515;padding:1rem 3rem;font-size:.75rem;color:rgba(255,255,255,.4);display:flex;justify-content:space-between;letter-spacing:.5px}
+  footer ul li a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.82rem;transition:color .2s}
+  footer ul li a:hover{color:var(--gold)}
+  .footer-bottom{background:#1e1515;padding:1rem 3rem;font-size:.73rem;color:rgba(255,255,255,.4);display:flex;justify-content:space-between;letter-spacing:.5px;flex-wrap:wrap;gap:.5rem}
+
+  /* ===== TOAST ===== */
+  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--rose-dark);color:white;padding:.9rem 1.8rem;border-radius:50px;font-size:.85rem;letter-spacing:.5px;z-index:9999;transition:transform .4s cubic-bezier(.175,.885,.32,1.275),opacity .4s;opacity:0;white-space:nowrap;box-shadow:0 8px 30px rgba(138,63,88,.35)}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+  /* ===== MODAL ===== */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+  .modal-overlay.open{display:flex}
+  .modal{background:white;border-radius:24px;padding:2.5rem;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;position:relative;animation:modalIn .35s cubic-bezier(.175,.885,.32,1.275)}
+  @keyframes modalIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal-close{position:absolute;top:1.2rem;right:1.2rem;background:var(--rose-light);border:none;color:var(--rose-dark);width:32px;height:32px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .modal-close:hover{background:var(--rose);color:white}
+  .modal h3{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.4rem;color:var(--charcoal)}
+  .modal .service-tag{font-size:.75rem;color:var(--rose);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;display:block}
+  .modal .booking-form{gap:.9rem}
+  .modal .book-btn{margin-top:.3rem}
+
+  /* ===== WHATSAPP FLOAT ===== */
+  .wa-float{position:fixed;bottom:1.5rem;right:1.5rem;background:#25d366;color:white;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 6px 20px rgba(37,211,102,.4);z-index:300;text-decoration:none;transition:transform .3s}
+  .wa-float:hover{transform:scale(1.1)}
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media(max-width:900px){
+    .nav-links,.nav-btn{display:none}
+    .hamburger{display:flex}
+    .mobile-menu{display:flex}
+
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .hero-text{padding:3.5rem 1.8rem 2.5rem;order:1}
+    .hero-text::before{top:2rem;left:1.5rem}
+    h1{font-size:2.2rem}
+    .hero-desc{max-width:100%;font-size:.9rem}
+    .hero-visual{order:2;min-height:280px;padding:2rem}
+    .hero-img-box{width:200px;height:250px}
+    .hero-badge{bottom:20px;right:20px;padding:.7rem .9rem}
+    .badge-num{font-size:1.4rem}
+
+    .section{padding:3.5rem 1.5rem}
+    .services-grid{grid-template-columns:1fr 1fr;gap:1rem}
+    h2{font-size:1.9rem}
+
+    .why-us{padding:3.5rem 1.5rem}
+    .why-grid{grid-template-columns:1fr;gap:2rem}
+    .why-visual{height:240px}
+
+    .gallery{padding:3.5rem 1.5rem}
+    .gallery-grid{grid-template-columns:1fr 1fr;gap:.8rem}
+    .g-card-top{height:120px;font-size:2.2rem}
+
+    .testimonials{padding:3.5rem 1.5rem}
+    .t-grid{grid-template-columns:1fr;gap:1rem}
+
+    .booking{padding:3.5rem 1.5rem}
+    .booking-box{padding:2rem 1.5rem}
+    .booking-box h3{font-size:1.6rem}
+    .form-row{grid-template-columns:1fr}
+
+    footer{grid-template-columns:1fr;gap:2rem;padding:2.5rem 1.5rem}
+    .footer-tagline{max-width:100%}
+    .footer-bottom{padding:1rem 1.5rem;flex-direction:column;gap:.3rem}
+  }
+
+  @media(max-width:480px){
+    nav{padding:.9rem 1.2rem}
+    .logo{font-size:1.1rem}
+    .services-grid{grid-template-columns:1fr}
+    .hero-cta{flex-direction:column;align-items:stretch}
+    .btn-primary,.btn-outline{text-align:center}
+    .gallery-grid{grid-template-columns:1fr 1fr}
+    h1{font-size:1.95rem}
+  }
 </style>
 </head>
 <body>
 
-<nav>
+<!-- NAV -->
+<nav id="mainNav">
   <div class="logo">Hansika <span>Beauty Parlor</span></div>
   <ul class="nav-links">
-    <li><a href="#">Services</a></li>
-    <li><a href="#">Gallery</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-btn">Book Now</button>
+  <button class="nav-btn" onclick="openModal()">Book Now</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#gallery" onclick="closeMobileMenu()">Gallery</a>
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  <a class="mob-book-btn" href="#" onclick="closeMobileMenu();openModal()">Book Appointment</a>
+</div>
+
+<!-- HERO -->
 <section class="hero">
   <div class="hero-text">
     <p class="eyebrow">✦ Welcome to Hansika Beauty Parlor</p>
     <h1>Where Beauty <em>Blooms</em> in Degloor</h1>
     <p class="hero-desc">Degloor's most trusted beauty destination — premium hair, skin, and nail care crafted with love and skill, right in your neighbourhood.</p>
     <div class="hero-cta">
-      <button class="btn-primary">Book Appointment</button>
-      <button class="btn-outline">View Services</button>
+      <button class="btn-primary" onclick="openModal()">Book Appointment</button>
+      <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">View Services</button>
     </div>
   </div>
   <div class="hero-visual">
@@ -151,56 +267,65 @@
   </div>
 </section>
 
+<!-- MARQUEE -->
 <div class="marquee-bar">
-  <span class="marquee-inner">✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp; ✦ Nail Art &nbsp;&nbsp;&nbsp; ✦ Waxing &nbsp;&nbsp;&nbsp; ✦ Bridal Packages &nbsp;&nbsp;&nbsp; ✦ Skin Treatments &nbsp;&nbsp;&nbsp; ✦ Eyebrow Threading &nbsp;&nbsp;&nbsp; ✦ Mehendi &nbsp;&nbsp;&nbsp; ✦ Degloor's Favourite Parlor &nbsp;&nbsp;&nbsp; ✦ Nanded District &nbsp;&nbsp;&nbsp; ✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials</span>
+  <span class="marquee-inner">✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp; ✦ Nail Art &nbsp;&nbsp;&nbsp; ✦ Waxing &nbsp;&nbsp;&nbsp; ✦ Bridal Packages &nbsp;&nbsp;&nbsp; ✦ Skin Treatments &nbsp;&nbsp;&nbsp; ✦ Eyebrow Threading &nbsp;&nbsp;&nbsp; ✦ Mehendi &nbsp;&nbsp;&nbsp; ✦ Degloor's Favourite Parlor &nbsp;&nbsp;&nbsp; ✦ Nanded District &nbsp;&nbsp;&nbsp; ✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp;</span>
 </div>
 
-<section class="section" style="background:var(--ivory)">
+<!-- SERVICES -->
+<section class="section" id="services" style="background:var(--ivory)">
   <div class="section-header">
     <p class="section-eyebrow">What We Offer</p>
     <h2>Our <em>Services</em></h2>
   </div>
   <div class="services-grid">
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('Hair Styling')">
       <div class="service-icon">💇‍♀️</div>
       <div class="service-name">Hair Styling</div>
       <div class="service-desc">Cut, colour, highlights, keratin treatment, and more — tailored to your look.</div>
       <div class="service-price">From ₹299</div>
+      <button class="service-book-btn">Book Now</button>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('Facial & Skin')">
       <div class="service-icon">✨</div>
       <div class="service-name">Facial & Skin</div>
       <div class="service-desc">Deep cleansing, brightening, and anti-aging facials using premium products.</div>
       <div class="service-price">From ₹499</div>
+      <button class="service-book-btn">Book Now</button>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('Nail Art')">
       <div class="service-icon">💅</div>
       <div class="service-name">Nail Art</div>
       <div class="service-desc">Manicure, pedicure, gel nails, and creative nail art designs.</div>
       <div class="service-price">From ₹249</div>
+      <button class="service-book-btn">Book Now</button>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('Threading & Waxing')">
       <div class="service-icon">🌸</div>
       <div class="service-name">Threading & Waxing</div>
       <div class="service-desc">Precise eyebrow shaping, upper lip, and full body waxing services.</div>
       <div class="service-price">From ₹50</div>
+      <button class="service-book-btn">Book Now</button>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('Bridal Package')">
       <div class="service-icon">👰</div>
       <div class="service-name">Bridal Package</div>
       <div class="service-desc">Complete bridal makeup, mehendi, hair, and glow treatment for your big day.</div>
       <div class="service-price">From ₹3999</div>
+      <button class="service-book-btn">Book Now</button>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('Spa & Massage')">
       <div class="service-icon">🕯️</div>
       <div class="service-name">Spa & Massage</div>
       <div class="service-desc">Head massage, body scrub, and relaxing spa treatments to de-stress.</div>
       <div class="service-price">From ₹799</div>
+      <button class="service-book-btn">Book Now</button>
     </div>
   </div>
 </section>
 
-<section class="why-us">
+<!-- WHY US -->
+<section class="why-us" id="about">
   <div class="why-grid">
     <div class="why-visual">
       <div class="big-emoji">🌺</div>
@@ -244,19 +369,21 @@
   </div>
 </section>
 
-<section class="gallery">
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
   <div class="section-header">
     <p class="section-eyebrow">Our Work</p>
     <h2>A Glimpse of <em>Our Craft</em></h2>
   </div>
   <div class="gallery-grid">
-    <div class="g-card"><div class="g-card-top c1">💇‍♀️</div><div class="g-label">Hair Colour</div></div>
-    <div class="g-card"><div class="g-card-top c2">💍</div><div class="g-label">Bridal Glam</div></div>
-    <div class="g-card"><div class="g-card-top c3">💅</div><div class="g-label">Nail Art</div></div>
-    <div class="g-card"><div class="g-card-top c4">🌿</div><div class="g-label">Skin Glow</div></div>
+    <div class="g-card" onclick="openModal('Hair Styling')"><div class="g-card-top c1">💇‍♀️</div><div class="g-label">Hair Colour</div></div>
+    <div class="g-card" onclick="openModal('Bridal Package')"><div class="g-card-top c2">💍</div><div class="g-label">Bridal Glam</div></div>
+    <div class="g-card" onclick="openModal('Nail Art')"><div class="g-card-top c3">💅</div><div class="g-label">Nail Art</div></div>
+    <div class="g-card" onclick="openModal('Facial & Skin')"><div class="g-card-top c4">🌿</div><div class="g-label">Skin Glow</div></div>
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="section-header">
     <p class="section-eyebrow">Kind Words</p>
@@ -290,43 +417,45 @@
   </div>
 </section>
 
-<section class="booking">
+<!-- BOOKING SECTION -->
+<section class="booking" id="contact">
   <div class="booking-box">
     <h3>Book Your Appointment</h3>
     <p>Reserve your spot at Hansika Beauty Parlor — we can't wait to pamper you!</p>
-    <div class="booking-form">
+    <div class="booking-form" id="inlineForm">
       <div class="form-row">
         <div class="form-group">
           <label>Your Name</label>
-          <input type="text" placeholder="e.g. Priya Sharma">
+          <input type="text" id="inlineName" placeholder="e.g. Priya Sharma">
         </div>
         <div class="form-group">
           <label>Phone Number</label>
-          <input type="tel" placeholder="+91 98765 43210">
+          <input type="tel" id="inlinePhone" placeholder="+91 98765 43210">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>Service</label>
-          <select>
+          <select id="inlineService">
             <option>Hair Styling</option>
-            <option>Facial & Skin</option>
+            <option>Facial &amp; Skin</option>
             <option>Nail Art</option>
             <option>Bridal Package</option>
-            <option>Threading & Waxing</option>
-            <option>Spa & Massage</option>
+            <option>Threading &amp; Waxing</option>
+            <option>Spa &amp; Massage</option>
           </select>
         </div>
         <div class="form-group">
           <label>Preferred Date</label>
-          <input type="date">
+          <input type="date" id="inlineDate">
         </div>
       </div>
-      <button class="book-btn">Confirm Appointment</button>
+      <button class="book-btn" onclick="submitBooking('inline')">Confirm Appointment</button>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div>
     <div class="footer-logo">Hansika <span>Beauty Parlor</span></div>
@@ -335,19 +464,19 @@
   <div>
     <h5>Quick Links</h5>
     <ul>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="#">About Us</a></li>
-      <li><a href="#">Book Now</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#" onclick="openModal();return false">Book Now</a></li>
     </ul>
   </div>
   <div>
     <h5>Contact</h5>
     <ul>
-      <li><a href="#">📍 Degloor, Dist. Nanded, Maharashtra</a></li>
-      <li><a href="#">📞 +91 98765 43210</a></li>
+      <li><a href="https://maps.google.com/?q=Degloor,Nanded,Maharashtra" target="_blank">📍 Degloor, Dist. Nanded, Maharashtra</a></li>
+      <li><a href="tel:+919876543210">📞 +91 98765 43210</a></li>
       <li><a href="#">🕐 Mon–Sat 9am–8pm</a></li>
-      <li><a href="#">✉ hansikabeauty@gmail.com</a></li>
+      <li><a href="mailto:hansikabeauty@gmail.com">✉ hansikabeauty@gmail.com</a></li>
     </ul>
   </div>
 </footer>
@@ -356,5 +485,143 @@
   <span>Made with ❤ in Degloor, Nanded</span>
 </div>
 
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/919876543210?text=Hi%20Hansika%20Beauty%20Parlor!%20I'd%20like%20to%20book%20an%20appointment." target="_blank" aria-label="WhatsApp us" title="Chat on WhatsApp">💬</a>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <h3>Book Appointment</h3>
+    <span class="service-tag" id="modalServiceTag">All Services</span>
+    <div class="booking-form">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="modalName" placeholder="e.g. Priya Sharma">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="modalPhone" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-group">
+        <label>Service</label>
+        <select id="modalService">
+          <option>Hair Styling</option>
+          <option>Facial &amp; Skin</option>
+          <option>Nail Art</option>
+          <option>Bridal Package</option>
+          <option>Threading &amp; Waxing</option>
+          <option>Spa &amp; Massage</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Preferred Date</label>
+        <input type="date" id="modalDate">
+      </div>
+      <button class="book-btn" onclick="submitBooking('modal')">Confirm Appointment ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ===== NAV SCROLL =====
+  window.addEventListener('scroll',()=>{
+    document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20)
+  })
+
+  // ===== HAMBURGER =====
+  const ham = document.getElementById('hamburger')
+  const mob = document.getElementById('mobileMenu')
+  ham.addEventListener('click',()=>{
+    ham.classList.toggle('open')
+    mob.classList.toggle('open')
+  })
+  function closeMobileMenu(){
+    ham.classList.remove('open')
+    mob.classList.remove('open')
+  }
+  // close on outside click
+  document.addEventListener('click',e=>{
+    if(!ham.contains(e.target) && !mob.contains(e.target)){
+      closeMobileMenu()
+    }
+  })
+
+  // ===== MODAL =====
+  const services = ['Hair Styling','Facial & Skin','Nail Art','Bridal Package','Threading & Waxing','Spa & Massage']
+  function openModal(service){
+    const overlay = document.getElementById('modalOverlay')
+    overlay.classList.add('open')
+    document.body.style.overflow='hidden'
+    if(service){
+      document.getElementById('modalServiceTag').textContent = service
+      const sel = document.getElementById('modalService')
+      for(let o of sel.options){ if(o.value === service || o.text === service){ sel.value = o.value; break } }
+    } else {
+      document.getElementById('modalServiceTag').textContent = 'All Services'
+    }
+    // set min date to today
+    const today = new Date().toISOString().split('T')[0]
+    document.getElementById('modalDate').min = today
+    document.getElementById('inlineDate').min = today
+  }
+  function closeModal(){
+    document.getElementById('modalOverlay').classList.remove('open')
+    document.body.style.overflow=''
+  }
+  function handleOverlayClick(e){
+    if(e.target === document.getElementById('modalOverlay')) closeModal()
+  }
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal() })
+
+  // ===== FORM SUBMIT =====
+  function submitBooking(source){
+    let name, phone, service, date
+    if(source==='modal'){
+      name = document.getElementById('modalName').value.trim()
+      phone = document.getElementById('modalPhone').value.trim()
+      service = document.getElementById('modalService').value
+      date = document.getElementById('modalDate').value
+    } else {
+      name = document.getElementById('inlineName').value.trim()
+      phone = document.getElementById('inlinePhone').value.trim()
+      service = document.getElementById('inlineService').value
+      date = document.getElementById('inlineDate').value
+    }
+    if(!name){ showToast('Please enter your name 😊'); return }
+    if(!phone || phone.length < 6){ showToast('Please enter a valid phone number 📞'); return }
+    if(!date){ showToast('Please pick your preferred date 📅'); return }
+
+    // success
+    const d = new Date(date)
+    const formatted = d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})
+    if(source==='modal') closeModal()
+    showToast(`✦ Appointment booked for ${formatted}! We'll confirm soon.`, 4000)
+
+    // reset
+    if(source==='modal'){
+      document.getElementById('modalName').value=''
+      document.getElementById('modalPhone').value=''
+      document.getElementById('modalDate').value=''
+    } else {
+      document.getElementById('inlineName').value=''
+      document.getElementById('inlinePhone').value=''
+      document.getElementById('inlineDate').value=''
+    }
+  }
+
+  // ===== TOAST =====
+  let toastTimer
+  function showToast(msg, duration=3000){
+    const t = document.getElementById('toast')
+    t.textContent = msg
+    t.classList.add('show')
+    clearTimeout(toastTimer)
+    toastTimer = setTimeout(()=>t.classList.remove('show'), duration)
+  }
+</script>
 </body>
 </html>
