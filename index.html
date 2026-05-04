@@ -315,6 +315,18 @@
       <div class="service-desc">Head massage, body scrub, and relaxing spa treatments to de-stress.</div>
       <button class="service-book-btn">Book Now</button>
     </div>
+    <div class="service-card" onclick="openModal('Ear Lobe Piercing')">
+      <div class="service-icon">👂</div>
+      <div class="service-name">Ear Lobe Piercing</div>
+      <div class="service-desc">Safe and hygienic ear lobe piercing with sterilised equipment for all ages.</div>
+      <button class="service-book-btn">Book Now</button>
+    </div>
+    <div class="service-card" onclick="openModal('Mole Removal')">
+      <div class="service-icon">🔬</div>
+      <div class="service-name">Mole Removal</div>
+      <div class="service-desc">Professional and safe mole removal treatment with proper aftercare guidance.</div>
+      <button class="service-book-btn">Book Now</button>
+    </div>
   </div>
 </section>
 
@@ -424,7 +436,7 @@
         </div>
         <div class="form-group">
           <label>Phone Number</label>
-          <input type="tel" id="inlinePhone" placeholder="+91 98765 43210">
+          <input type="tel" id="inlinePhone" placeholder="+91 724 924 1100">
         </div>
       </div>
       <div class="form-row">
@@ -437,6 +449,8 @@
             <option>Bridal Package</option>
             <option>Threading &amp; Waxing</option>
             <option>Spa &amp; Massage</option>
+            <option>Ear Lobe Piercing</option>
+            <option>Mole Removal</option>
           </select>
         </div>
         <div class="form-group">
@@ -468,7 +482,7 @@
     <h5>Contact</h5>
     <ul>
       <li><a href="https://maps.google.com/?q=Degloor,Nanded,Maharashtra" target="_blank">📍 Degloor, Dist. Nanded, Maharashtra</a></li>
-      <li><a href="tel:+919876543210">📞 +91 98765 43210</a></li>
+      <li><a href="tel:+917249241100">📞 +91 724 924 1100</a></li>
       <li><a href="#">🕐 Mon–Sat 9am–8pm</a></li>
       <li><a href="mailto:hansikabeauty@gmail.com">✉ hansikabeauty@gmail.com</a></li>
     </ul>
@@ -480,7 +494,7 @@
 </div>
 
 <!-- WHATSAPP FLOAT -->
-<a class="wa-float" href="https://wa.me/919876543210?text=Hi%20Hansika%20Beauty%20Parlor!%20I'd%20like%20to%20book%20an%20appointment." target="_blank" aria-label="WhatsApp us" title="Chat on WhatsApp">💬</a>
+<a class="wa-float" href="https://wa.me/917249241100?text=Hi%20Hansika%20Beauty%20Parlor!%20I'd%20like%20to%20book%20an%20appointment." target="_blank" aria-label="WhatsApp us" title="Chat on WhatsApp">💬</a>
 
 <!-- BOOKING MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
@@ -495,7 +509,7 @@
       </div>
       <div class="form-group">
         <label>Phone Number</label>
-        <input type="tel" id="modalPhone" placeholder="+91 98765 43210">
+        <input type="tel" id="modalPhone" placeholder="+91 724 924 1100">
       </div>
       <div class="form-group">
         <label>Service</label>
@@ -506,6 +520,8 @@
           <option>Bridal Package</option>
           <option>Threading &amp; Waxing</option>
           <option>Spa &amp; Massage</option>
+          <option>Ear Lobe Piercing</option>
+          <option>Mole Removal</option>
         </select>
       </div>
       <div class="form-group">
@@ -545,7 +561,7 @@
   })
 
   // ===== MODAL =====
-  const services = ['Hair Styling','Facial & Skin','Nail Art','Bridal Package','Threading & Waxing','Spa & Massage']
+  const services = ['Hair Styling','Facial & Skin','Nail Art','Bridal Package','Threading & Waxing','Spa & Massage','Ear Lobe Piercing','Mole Removal']
   function openModal(service){
     const overlay = document.getElementById('modalOverlay')
     overlay.classList.add('open')
