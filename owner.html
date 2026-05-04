@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Dashboard — Hansika Beauty Parlor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --rose:#c2718b;--rose-light:#f7e6ec;--rose-dark:#8a3f58;
+  --gold:#c9a96e;--ivory:#fdf8f3;--charcoal:#2d2424;--muted:#7a6a6a;
+  --green:#2e7d52;--green-light:#e8f5ee;
+  --blue:#1a5fa8;--blue-light:#e8f0fb;
+  --orange:#b05e1a;--orange-light:#fef0e6;
+  --red:#b01a1a;--red-light:#fee8e8;
+}
+body{font-family:'Jost',sans-serif;background:var(--ivory);color:var(--charcoal);min-height:100vh}
+
+/* ── LOGIN SCREEN ── */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem}
+.login-card{background:white;border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(194,113,139,.15);text-align:center}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--rose-dark);margin-bottom:.3rem}
+.login-logo span{color:var(--gold);font-style:italic}
+.login-sub{font-size:.8rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:2rem}
+.login-card input{width:100%;padding:.85rem 1rem;border:1.5px solid #e8d8e0;border-radius:12px;font-family:'Jost',sans-serif;font-size:.9rem;text-align:center;letter-spacing:3px;outline:none;transition:border .2s;margin-bottom:1rem}
+.login-card input:focus{border-color:var(--rose)}
+.login-card button{width:100%;background:var(--rose);color:white;border:none;padding:.9rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .3s}
+.login-card button:hover{background:var(--rose-dark)}
+.login-err{color:var(--red);font-size:.8rem;margin-top:.7rem;display:none}
+
+/* ── DASHBOARD ── */
+#dashboard{display:none}
+
+header{background:var(--rose-dark);color:white;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.h-logo{font-family:'Playfair Display',serif;font-size:1.2rem}
+.h-logo span{color:var(--gold);font-style:italic}
+.h-sub{font-size:.73rem;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;margin-top:.1rem}
+.logout-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;padding:.4rem 1rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.logout-btn:hover{background:rgba(255,255,255,.25)}
+
+main{padding:2rem;max-width:1200px;margin:0 auto}
+
+/* ── STAT CARDS ── */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:white;border-radius:16px;padding:1.3rem 1.2rem;border-left:4px solid var(--rose);box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.stat-card.c-pending{border-color:var(--gold)}
+.stat-card.c-confirmed{border-color:var(--blue)}
+.stat-card.c-done{border-color:var(--green)}
+.stat-card.c-cancelled{border-color:var(--red)}
+.stat-card.c-today{border-color:var(--rose)}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--charcoal);line-height:1}
+.stat-label{font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+/* ── CONTROLS ── */
+.controls{background:white;border-radius:16px;padding:1.2rem 1.4rem;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.controls input,.controls select{padding:.6rem .9rem;border:1.5px solid #e8d8e0;border-radius:10px;font-family:'Jost',sans-serif;font-size:.85rem;color:var(--charcoal);outline:none;transition:border .2s;background:white}
+.controls input:focus,.controls select:focus{border-color:var(--rose)}
+.controls input[type="text"]{flex:1;min-width:180px}
+.refresh-btn{background:var(--rose-light);border:none;color:var(--rose-dark);padding:.6rem 1.2rem;border-radius:10px;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.5px;cursor:pointer;transition:background .2s;white-space:nowrap}
+.refresh-btn:hover{background:var(--rose);color:white}
+
+/* ── TABLE ── */
+.table-wrap{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.table-header{padding:1.1rem 1.4rem;border-bottom:1px solid #f0e6eb;display:flex;justify-content:space-between;align-items:center}
+.table-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--charcoal)}
+.count-badge{background:var(--rose-light);color:var(--rose-dark);font-size:.75rem;padding:.25rem .7rem;border-radius:50px;font-weight:500}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+thead{background:var(--ivory)}
+th{padding:.85rem 1.1rem;text-align:left;font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
+td{padding:.9rem 1.1rem;border-top:1px solid #f5edf0;vertical-align:middle}
+tr:hover td{background:#fdf5f7}
+.name-cell{font-weight:500;color:var(--charcoal)}
+.phone-cell{color:var(--muted);font-size:.82rem}
+.date-cell{white-space:nowrap;font-size:.82rem}
+.service-pill{background:var(--rose-light);color:var(--rose-dark);font-size:.72rem;padding:.25rem .7rem;border-radius:50px;white-space:nowrap;font-weight:500}
+
+/* Status badge */
+.status-badge{font-size:.72rem;padding:.28rem .75rem;border-radius:50px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;display:inline-block}
+.s-pending{background:var(--orange-light);color:var(--orange)}
+.s-confirmed{background:var(--blue-light);color:var(--blue)}
+.s-done{background:var(--green-light);color:var(--green)}
+.s-cancelled{background:var(--red-light);color:var(--red)}
+
+/* Action buttons */
+.action-wrap{display:flex;gap:.4rem;flex-wrap:wrap}
+.act-btn{font-size:.7rem;padding:.3rem .7rem;border-radius:6px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.3px;transition:all .2s;white-space:nowrap}
+.act-confirm{background:var(--blue-light);color:var(--blue)}
+.act-confirm:hover{background:var(--blue);color:white}
+.act-done{background:var(--green-light);color:var(--green)}
+.act-done:hover{background:var(--green);color:white}
+.act-cancel{background:var(--red-light);color:var(--red)}
+.act-cancel:hover{background:var(--red);color:white}
+.act-delete{background:#f0f0f0;color:#666}
+.act-delete:hover{background:#ddd;color:#333}
+
+/* Empty / loading */
+.empty-row td{text-align:center;padding:3rem;color:var(--muted);font-size:.9rem}
+.loading-row td{text-align:center;padding:2rem;color:var(--rose)}
+
+/* Toast */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--rose-dark);color:white;padding:.8rem 1.6rem;border-radius:50px;font-size:.85rem;z-index:9999;transition:transform .4s cubic-bezier(.175,.885,.32,1.275),opacity .4s;opacity:0;white-space:nowrap;box-shadow:0 8px 30px rgba(138,63,88,.35)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+@media(max-width:700px){
+  main{padding:1rem}
+  th:nth-child(5),td:nth-child(5){display:none} /* hide created-at on mobile */
+  .controls{gap:.5rem}
+  .controls input[type="text"]{min-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">Hansika <span>Beauty Parlor</span></div>
+    <div class="login-sub">Owner Dashboard</div>
+    <input type="password" id="secretInput" placeholder="Enter owner password" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">Sign In ✦</button>
+    <div class="login-err" id="loginErr">❌ Wrong password. Try again.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <header>
+    <div>
+      <div class="h-logo">Hansika <span>Beauty Parlor</span></div>
+      <div class="h-sub">Owner Appointment Dashboard</div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Sign Out</button>
+  </header>
+
+  <main>
+    <!-- Stats -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card c-today"><div class="stat-num" id="s-today">—</div><div class="stat-label">Today</div></div>
+      <div class="stat-card c-pending"><div class="stat-num" id="s-pending">—</div><div class="stat-label">Pending</div></div>
+      <div class="stat-card c-confirmed"><div class="stat-num" id="s-confirmed">—</div><div class="stat-label">Confirmed</div></div>
+      <div class="stat-card c-done"><div class="stat-num" id="s-done">—</div><div class="stat-label">Completed</div></div>
+      <div class="stat-card c-cancelled"><div class="stat-num" id="s-cancelled">—</div><div class="stat-label">Cancelled</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-total">—</div><div class="stat-label">Total</div></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="🔍  Search name, phone, service…" oninput="debounceLoad()">
+      <select id="statusFilter" onchange="loadAppointments()">
+        <option value="all">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="done">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <input type="date" id="dateFilter" onchange="loadAppointments()">
+      <button class="refresh-btn" onclick="loadAll()">↻ Refresh</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">Appointments</div>
+        <div class="count-badge" id="countBadge">—</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Customer</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Booked On</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="apptBody">
+            <tr class="loading-row"><td colspan="7">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = window.location.origin + '/api';
+let SECRET = '';
+
+// ── AUTH ────────────────────────────────────────────────────────────────────
+function login() {
+  const val = document.getElementById('secretInput').value.trim();
+  if (!val) return;
+  SECRET = val;
+  // Verify by hitting stats endpoint
+  fetch(`${API}/owner/stats?secret=${encodeURIComponent(SECRET)}`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.ok) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        sessionStorage.setItem('ownerSecret', SECRET);
+        loadAll();
+      } else {
+        document.getElementById('loginErr').style.display = 'block';
+      }
+    })
+    .catch(() => { document.getElementById('loginErr').style.display = 'block'; });
+}
+
+function logout() {
+  sessionStorage.removeItem('ownerSecret');
+  SECRET = '';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('secretInput').value = '';
+  document.getElementById('loginErr').style.display = 'none';
+}
+
+// Auto-login if session saved
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = sessionStorage.getItem('ownerSecret');
+  if (saved) {
+    SECRET = saved;
+    document.getElementById('secretInput').value = saved;
+    login();
+  }
+});
+
+// ── DATA LOADING ─────────────────────────────────────────────────────────────
+function loadAll() {
+  loadStats();
+  loadAppointments();
+}
+
+function loadStats() {
+  fetch(`${API}/owner/stats?secret=${encodeURIComponent(SECRET)}`)
+    .then(r => r.json())
+    .then(d => {
+      if (!d.ok) return;
+      const s = d.stats;
+      document.getElementById('s-today').textContent     = s.today;
+      document.getElementById('s-pending').textContent   = s.pending;
+      document.getElementById('s-confirmed').textContent = s.confirmed;
+      document.getElementById('s-done').textContent      = s.done;
+      document.getElementById('s-cancelled').textContent = s.cancelled;
+      document.getElementById('s-total').textContent     = s.total;
+    });
+}
+
+function loadAppointments() {
+  const status = document.getElementById('statusFilter').value;
+  const date   = document.getElementById('dateFilter').value;
+  const search = document.getElementById('searchInput').value.trim();
+
+  let url = `${API}/owner/appointments?secret=${encodeURIComponent(SECRET)}`;
+  if (status && status !== 'all') url += `&status=${status}`;
+  if (date)   url += `&date=${date}`;
+  if (search) url += `&search=${encodeURIComponent(search)}`;
+
+  const body = document.getElementById('apptBody');
+  body.innerHTML = '<tr class="loading-row"><td colspan="7">Loading…</td></tr>';
+
+  fetch(url)
+    .then(r => r.json())
+    .then(d => {
+      if (!d.ok) { body.innerHTML = '<tr class="empty-row"><td colspan="7">Error loading data.</td></tr>'; return; }
+      document.getElementById('countBadge').textContent = `${d.count} appointment${d.count !== 1 ? 's' : ''}`;
+      renderTable(d.appointments);
+    });
+}
+
+let searchTimer;
+function debounceLoad() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(loadAppointments, 350);
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function renderTable(appts) {
+  const body = document.getElementById('apptBody');
+  if (!appts.length) {
+    body.innerHTML = '<tr class="empty-row"><td colspan="7">No appointments found.</td></tr>';
+    return;
+  }
+
+  body.innerHTML = appts.map(a => {
+    const date = formatDate(a.date);
+    const createdAt = formatDateTime(a.createdAt);
+    const statusBadge = `<span class="status-badge s-${a.status}">${a.status}</span>`;
+
+    // Build action buttons
+    let actions = '';
+    if (a.status === 'pending')   actions += `<button class="act-btn act-confirm" onclick="updateStatus(${a.id},'confirmed')">Confirm</button>`;
+    if (a.status === 'confirmed') actions += `<button class="act-btn act-done" onclick="updateStatus(${a.id},'done')">Done</button>`;
+    if (a.status !== 'cancelled' && a.status !== 'done')
+                                  actions += `<button class="act-btn act-cancel" onclick="updateStatus(${a.id},'cancelled')">Cancel</button>`;
+    actions += `<button class="act-btn act-delete" onclick="deleteAppt(${a.id})">✕</button>`;
+
+    return `
+      <tr>
+        <td style="color:var(--muted);font-size:.78rem">#${a.id}</td>
+        <td>
+          <div class="name-cell">${esc(a.name)}</div>
+          <div class="phone-cell">${esc(a.phone)}</div>
+        </td>
+        <td><span class="service-pill">${esc(a.service)}</span></td>
+        <td class="date-cell">${date}</td>
+        <td class="date-cell" style="color:var(--muted);font-size:.78rem">${createdAt}</td>
+        <td>${statusBadge}</td>
+        <td><div class="action-wrap">${actions}</div></td>
+      </tr>`;
+  }).join('');
+}
+
+// ── ACTIONS ──────────────────────────────────────────────────────────────────
+function updateStatus(id, status) {
+  fetch(`${API}/owner/appointments/${id}?secret=${encodeURIComponent(SECRET)}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.ok) { showToast(`✦ Appointment #${id} marked as ${status}`); loadAll(); }
+    else showToast('⚠ Error: ' + d.error);
+  });
+}
+
+function deleteAppt(id) {
+  if (!confirm(`Delete appointment #${id}? This cannot be undone.`)) return;
+  fetch(`${API}/owner/appointments/${id}?secret=${encodeURIComponent(SECRET)}`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok) { showToast(`Appointment #${id} deleted`); loadAll(); }
+      else showToast('⚠ Error: ' + d.error);
+    });
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function formatDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+}
+function formatDateTime(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let toastTimer;
+function showToast(msg, dur=3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), dur);
+}
+</script>
+</body>
+</html>
