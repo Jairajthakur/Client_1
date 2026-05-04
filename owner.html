@@ -214,6 +214,10 @@ function login() {
   const val = document.getElementById('secretInput').value.trim();
   if (!val) return;
   SECRET = val;
+  const errEl = document.getElementById('loginErr');
+  errEl.style.display = 'none';
+  errEl.textContent = '❌ Wrong password. Try again.';
+
   // Verify by hitting stats endpoint
   fetch(`${API}/owner/stats?secret=${encodeURIComponent(SECRET)}`)
     .then(r => r.json())
@@ -223,11 +227,21 @@ function login() {
         document.getElementById('dashboard').style.display = 'block';
         sessionStorage.setItem('ownerSecret', SECRET);
         loadAll();
+      } else if (data.error === 'Unauthorized.') {
+        errEl.textContent = '❌ Wrong password. Try again.';
+        errEl.style.display = 'block';
       } else {
-        document.getElementById('loginErr').style.display = 'block';
+        // Server is up but DB may not be ready — still let owner in
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        sessionStorage.setItem('ownerSecret', SECRET);
+        loadAll();
       }
     })
-    .catch(() => { document.getElementById('loginErr').style.display = 'block'; });
+    .catch(() => {
+      errEl.textContent = '⚠️ Cannot reach server. Check your connection.';
+      errEl.style.display = 'block';
+    });
 }
 
 function logout() {
