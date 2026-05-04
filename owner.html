@@ -87,6 +87,8 @@ tr:hover td{background:#fdf5f7}
 .act-btn{font-size:.7rem;padding:.3rem .7rem;border-radius:6px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.3px;transition:all .2s;white-space:nowrap}
 .act-confirm{background:var(--blue-light);color:var(--blue)}
 .act-confirm:hover{background:var(--blue);color:white}
+.act-whatsapp{background:#e7f9ee;color:#25a244}
+.act-whatsapp:hover{background:#25a244;color:white}
 .act-done{background:var(--green-light);color:var(--green)}
 .act-done:hover{background:var(--green);color:white}
 .act-cancel{background:var(--red-light);color:var(--red)}
@@ -297,10 +299,13 @@ function renderTable(appts) {
 
     // Build action buttons
     let actions = '';
-    if (a.status === 'pending')   actions += `<button class="act-btn act-confirm" onclick="updateStatus(${a.id},'confirmed')">Confirm</button>`;
-    if (a.status === 'confirmed') actions += `<button class="act-btn act-done" onclick="updateStatus(${a.id},'done')">Done</button>`;
+    if (a.status === 'pending')   actions += `<button class="act-btn act-confirm" onclick="updateStatus(${a.id},'confirmed','${esc(a.phone)}','${esc(a.name)}','${esc(a.service)}','${esc(a.date)}')">Confirm</button>`;
+    if (a.status === 'confirmed') {
+      actions += `<button class="act-btn act-whatsapp" onclick="sendWhatsApp('${esc(a.phone)}','${esc(a.name)}','${esc(a.service)}','${esc(a.date)}','confirmed')" title="Notify on WhatsApp">📲 WhatsApp</button>`;
+      actions += `<button class="act-btn act-done" onclick="updateStatus(${a.id},'done')">Done</button>`;
+    }
     if (a.status !== 'cancelled' && a.status !== 'done')
-                                  actions += `<button class="act-btn act-cancel" onclick="updateStatus(${a.id},'cancelled')">Cancel</button>`;
+                                  actions += `<button class="act-btn act-cancel" onclick="updateStatus(${a.id},'cancelled','${esc(a.phone)}','${esc(a.name)}','${esc(a.service)}','${esc(a.date)}')">Cancel</button>`;
     actions += `<button class="act-btn act-delete" onclick="deleteAppt(${a.id})">✕</button>`;
 
     return `
@@ -320,7 +325,19 @@ function renderTable(appts) {
 }
 
 // ── ACTIONS ──────────────────────────────────────────────────────────────────
-function updateStatus(id, status) {
+function sendWhatsApp(phone, name, service, date, status) {
+  const cleaned = phone.replace(/\D/g, '');
+  const num = cleaned.startsWith('0') ? '91' + cleaned.slice(1) : cleaned.length <= 10 ? '91' + cleaned : cleaned;
+  let msg = '';
+  if (status === 'confirmed') {
+    msg = `Hello ${name}! 🌸 Your appointment at Hansika Beauty Parlor has been *confirmed* for *${service}* on *${date}*. We look forward to seeing you! ✨`;
+  } else if (status === 'cancelled') {
+    msg = `Hello ${name}, we're sorry to inform you that your appointment for *${service}* on *${date}* at Hansika Beauty Parlor has been *cancelled*. Please contact us to reschedule. 🙏`;
+  }
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function updateStatus(id, status, phone, name, service, date) {
   fetch(`${API}/owner/appointments/${id}?secret=${encodeURIComponent(SECRET)}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -328,7 +345,13 @@ function updateStatus(id, status) {
   })
   .then(r => r.json())
   .then(d => {
-    if (d.ok) { showToast(`✦ Appointment #${id} marked as ${status}`); loadAll(); }
+    if (d.ok) {
+      showToast(`✦ Appointment #${id} marked as ${status}`);
+      loadAll();
+      if ((status === 'confirmed' || status === 'cancelled') && phone) {
+        sendWhatsApp(phone, name, service, date, status);
+      }
+    }
     else showToast('⚠ Error: ' + d.error);
   });
 }
