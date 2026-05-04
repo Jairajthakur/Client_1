@@ -110,7 +110,21 @@ tr:hover td{background:#fdf5f7}
   .controls{gap:.5rem}
   .controls input[type="text"]{min-width:100%}
 }
-</style>
+
+  /* ── Image Upload Section ── */
+  .upload-section{background:white;border-radius:16px;padding:1.5rem;margin-top:1.5rem;box-shadow:0 2px 12px rgba(194,113,139,.08)}
+  .upload-section h3{font-family:'Playfair Display',serif;color:var(--rose-dark);margin-bottom:1rem;font-size:1.1rem}
+  .upload-controls{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+  .upload-controls select{padding:.5rem .8rem;border:1.5px solid #e8d8e0;border-radius:10px;font-family:'Jost',sans-serif;font-size:.85rem;outline:none}
+  .upload-controls input[type=file]{font-family:'Jost',sans-serif;font-size:.82rem}
+  .upload-btn{background:var(--rose);color:white;border:none;padding:.5rem 1.2rem;border-radius:10px;font-family:'Jost',sans-serif;font-size:.82rem;cursor:pointer}
+  .upload-btn:hover{background:var(--rose-dark)}
+  .upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.8rem;margin-top:1rem}
+  .upload-img-wrap{position:relative}
+  .upload-img-wrap img{width:100%;height:120px;object-fit:cover;border-radius:10px}
+  .del-img-btn{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);color:white;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:.75rem;line-height:22px;text-align:center}
+
+  </style>
 </head>
 <body>
 
@@ -390,5 +404,73 @@ function showToast(msg, dur=3000) {
   toastTimer = setTimeout(() => t.classList.remove('show'), dur);
 }
 </script>
+
+  <!-- Image Upload Section -->
+  <div class="upload-section">
+    <h3>📷 Service Photos</h3>
+    <div class="upload-controls">
+      <select id="uploadService">
+        <option>Hair Styling</option>
+        <option>Facial &amp; Skin</option>
+        <option>Manicure &amp; Pedicure</option>
+        <option>Threading &amp; Waxing</option>
+        <option>Bridal Package</option>
+        <option>Spa &amp; Massage</option>
+        <option>Ear Lobe Piercing</option>
+        <option>Mole Removal</option>
+        <option>Mehendi</option>
+        <option>Training Center</option>
+        <option>Makeup</option>
+      </select>
+      <input type="file" id="uploadFile" accept="image/*" multiple>
+      <button class="upload-btn" onclick="uploadImages()">Upload</button>
+    </div>
+    <div class="upload-grid" id="uploadGrid"><p style="color:var(--muted);font-size:.85rem">Select a service to view photos.</p></div>
+  </div>
+
+  <script>
+  const IMG_API = API + '/owner';
+  const uploadService = document.getElementById('uploadService');
+  uploadService.addEventListener('change', loadServiceImages);
+
+  async function loadServiceImages() {
+    const svc = uploadService.value.replace(/[^a-z0-9]/gi,'_');
+    const base = API.replace('/api','');
+    const res = await fetch(API.replace('/api','/api') + '/images?service=' + encodeURIComponent(svc));
+    const data = await res.json();
+    const grid = document.getElementById('uploadGrid');
+    if (!data.images.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:.85rem">No photos yet.</p>'; return; }
+    grid.innerHTML = data.images.map(url =>
+      `<div class="upload-img-wrap">
+        <img src="${base}${url}" alt="">
+        <button class="del-img-btn" onclick="deleteImage('${url.split('/').pop()}')">✕</button>
+      </div>`
+    ).join('');
+  }
+
+  async function uploadImages() {
+    const files = document.getElementById('uploadFile').files;
+    const svc = uploadService.value;
+    if (!files.length) { showToast('Please select an image first'); return; }
+    for (const file of files) {
+      const fd = new FormData();
+      fd.append('image', file);
+      await fetch(`${IMG_API}/images?secret=${encodeURIComponent(SECRET)}&service=${encodeURIComponent(svc.replace(/[^a-z0-9]/gi,'_'))}`, {
+        method: 'POST', body: fd
+      });
+    }
+    document.getElementById('uploadFile').value = '';
+    showToast('✦ Photos uploaded!');
+    loadServiceImages();
+  }
+
+  async function deleteImage(filename) {
+    if (!confirm('Delete this photo?')) return;
+    await fetch(`${IMG_API}/images?secret=${encodeURIComponent(SECRET)}&file=${encodeURIComponent(filename)}`, { method: 'DELETE' });
+    showToast('Photo deleted');
+    loadServiceImages();
+  }
+  </script>
+
 </body>
 </html>
