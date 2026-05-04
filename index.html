@@ -269,7 +269,7 @@
 
 <!-- MARQUEE -->
 <div class="marquee-bar">
-  <span class="marquee-inner">✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp; ✦ Manicure &amp; Pedicure &nbsp;&nbsp;&nbsp; ✦ Waxing &nbsp;&nbsp;&nbsp; ✦ Bridal Packages &nbsp;&nbsp;&nbsp; ✦ Skin Treatments &nbsp;&nbsp;&nbsp; ✦ Eyebrow Threading &nbsp;&nbsp;&nbsp; ✦ Mehendi &nbsp;&nbsp;&nbsp; ✦ Degloor's Favourite Parlor &nbsp;&nbsp;&nbsp; ✦ Nanded District &nbsp;&nbsp;&nbsp; ✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp;</span>
+  <span class="marquee-inner">✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp; ✦ Manicure &amp; Pedicure &nbsp;&nbsp;&nbsp; ✦ Waxing &nbsp;&nbsp;&nbsp; ✦ Bridal Packages &nbsp;&nbsp;&nbsp; ✦ Skin Treatments &nbsp;&nbsp;&nbsp; ✦ Eyebrow Threading &nbsp;&nbsp;&nbsp; ✦ Mehendi &nbsp;&nbsp;&nbsp; ✦ Training Center &nbsp;&nbsp;&nbsp; ✦ Degloor's Favourite Parlor &nbsp;&nbsp;&nbsp; ✦ Nanded District &nbsp;&nbsp;&nbsp; ✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp;</span>
 </div>
 
 <!-- SERVICES -->
@@ -325,6 +325,18 @@
       <div class="service-icon">🔬</div>
       <div class="service-name">Mole Removal</div>
       <div class="service-desc">Professional and safe mole removal treatment with proper aftercare guidance.</div>
+      <button class="service-book-btn">Book Now</button>
+    </div>
+    <div class="service-card" onclick="openModal('Mehendi')">
+      <div class="service-icon">🌿</div>
+      <div class="service-name">Mehendi</div>
+      <div class="service-desc">Beautiful bridal and festive mehendi designs by skilled artists for all occasions.</div>
+      <button class="service-book-btn">Book Now</button>
+    </div>
+    <div class="service-card" onclick="openModal('Training Center')">
+      <div class="service-icon">🎓</div>
+      <div class="service-name">Training Center</div>
+      <div class="service-desc">Learn professional beauty skills — courses in makeup, hair, skin care, and more.</div>
       <button class="service-book-btn">Book Now</button>
     </div>
   </div>
@@ -451,6 +463,8 @@
             <option>Spa &amp; Massage</option>
             <option>Ear Lobe Piercing</option>
             <option>Mole Removal</option>
+            <option>Mehendi</option>
+            <option>Training Center</option>
           </select>
         </div>
         <div class="form-group">
@@ -522,6 +536,8 @@
           <option>Spa &amp; Massage</option>
           <option>Ear Lobe Piercing</option>
           <option>Mole Removal</option>
+          <option>Mehendi</option>
+          <option>Training Center</option>
         </select>
       </div>
       <div class="form-group">
@@ -561,7 +577,7 @@
   })
 
   // ===== MODAL =====
-  const services = ['Hair Styling','Facial & Skin','Manicure & Pedicure','Bridal Package','Threading & Waxing','Spa & Massage','Ear Lobe Piercing','Mole Removal']
+  const services = ['Hair Styling','Facial & Skin','Manicure & Pedicure','Bridal Package','Threading & Waxing','Spa & Massage','Ear Lobe Piercing','Mole Removal','Mehendi','Training Center']
   function openModal(service){
     const overlay = document.getElementById('modalOverlay')
     overlay.classList.add('open')
