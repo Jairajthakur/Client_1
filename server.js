@@ -30,9 +30,13 @@ const upload = multer({
 });
 
 // ── Database setup ────────────────────────────────────────────────────────────
+if (!process.env.DATABASE_URL) {
+  console.warn('⚠  DATABASE_URL is not set. Database features will be unavailable.');
+}
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
 async function initDB() {
@@ -75,6 +79,12 @@ function rowToAppt(r) {
            date: r.date, notes: r.notes, status: r.status, createdAt: r.created_at };
 }
 
+function dbRequired(req, res, next) {
+  if (!process.env.DATABASE_URL)
+    return res.status(503).json({ ok: false, error: 'Database not configured. Set DATABASE_URL.' });
+  next();
+}
+
 // ── IMAGE ROUTES ──────────────────────────────────────────────────────────────
 
 // GET /api/images?service=Hair+Styling  → list images for a service (public)
@@ -104,7 +114,7 @@ app.delete('/api/owner/images', ownerAuth, (req, res) => {
 
 // ── PUBLIC ROUTES ─────────────────────────────────────────────────────────────
 
-app.post('/api/appointments', async (req, res) => {
+app.post('/api/appointments', dbRequired, async (req, res) => {
   const { name, phone, service, date, notes } = req.body;
   if (!name || !phone || !service || !date)
     return res.status(400).json({ ok: false, error: 'name, phone, service and date are required.' });
@@ -123,7 +133,7 @@ app.post('/api/appointments', async (req, res) => {
 
 // ── OWNER ROUTES ──────────────────────────────────────────────────────────────
 
-app.get('/api/owner/appointments', ownerAuth, async (req, res) => {
+app.get('/api/owner/appointments', ownerAuth, dbRequired, async (req, res) => {
   const { status, date, search } = req.query;
   let query = 'SELECT * FROM appointments WHERE 1=1';
   const params = [];
@@ -137,7 +147,7 @@ app.get('/api/owner/appointments', ownerAuth, async (req, res) => {
   } catch (e) { console.error(e); return res.status(500).json({ ok: false, error: 'Database error.' }); }
 });
 
-app.patch('/api/owner/appointments/:id', ownerAuth, async (req, res) => {
+app.patch('/api/owner/appointments/:id', ownerAuth, dbRequired, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const { status } = req.body;
   const allowed = ['pending', 'confirmed', 'done', 'cancelled'];
@@ -150,7 +160,7 @@ app.patch('/api/owner/appointments/:id', ownerAuth, async (req, res) => {
   } catch (e) { console.error(e); return res.status(500).json({ ok: false, error: 'Database error.' }); }
 });
 
-app.delete('/api/owner/appointments/:id', ownerAuth, async (req, res) => {
+app.delete('/api/owner/appointments/:id', ownerAuth, dbRequired, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
     const { rows } = await pool.query('DELETE FROM appointments WHERE id=$1 RETURNING id', [id]);
@@ -159,7 +169,7 @@ app.delete('/api/owner/appointments/:id', ownerAuth, async (req, res) => {
   } catch (e) { console.error(e); return res.status(500).json({ ok: false, error: 'Database error.' }); }
 });
 
-app.get('/api/owner/stats', ownerAuth, async (req, res) => {
+app.get('/api/owner/stats', ownerAuth, dbRequired, async (req, res) => {
   const today = new Date().toISOString().split('T')[0];
   try {
     const { rows } = await pool.query(`
@@ -181,9 +191,14 @@ app.get('/api/owner/stats', ownerAuth, async (req, res) => {
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-initDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`\n✦ Hansika Backend running on port ${PORT}`);
-    console.log(`  Owner secret: hansika2025\n`);
+// Always start the HTTP server first, then attempt DB init
+app.listen(PORT, () => {
+  console.log(`\n✦ Hansika Backend running on port ${PORT}`);
+  console.log(`  Owner secret: hansika2025\n`);
+});
+
+if (process.env.DATABASE_URL) {
+  initDB().catch(err => {
+    console.error('⚠  DB init failed (API routes requiring DB will return 503):', err.message);
   });
-}).catch(err => { console.error('Failed to init DB:', err); process.exit(1); });
+}
