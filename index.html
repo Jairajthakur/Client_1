@@ -269,7 +269,7 @@
 
 <!-- MARQUEE -->
 <div class="marquee-bar">
-  <span class="marquee-inner">✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp; ✦ Nail Art &nbsp;&nbsp;&nbsp; ✦ Waxing &nbsp;&nbsp;&nbsp; ✦ Bridal Packages &nbsp;&nbsp;&nbsp; ✦ Skin Treatments &nbsp;&nbsp;&nbsp; ✦ Eyebrow Threading &nbsp;&nbsp;&nbsp; ✦ Mehendi &nbsp;&nbsp;&nbsp; ✦ Degloor's Favourite Parlor &nbsp;&nbsp;&nbsp; ✦ Nanded District &nbsp;&nbsp;&nbsp; ✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp;</span>
+  <span class="marquee-inner">✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp; ✦ Manicure &amp; Pedicure &nbsp;&nbsp;&nbsp; ✦ Waxing &nbsp;&nbsp;&nbsp; ✦ Bridal Packages &nbsp;&nbsp;&nbsp; ✦ Skin Treatments &nbsp;&nbsp;&nbsp; ✦ Eyebrow Threading &nbsp;&nbsp;&nbsp; ✦ Mehendi &nbsp;&nbsp;&nbsp; ✦ Degloor's Favourite Parlor &nbsp;&nbsp;&nbsp; ✦ Nanded District &nbsp;&nbsp;&nbsp; ✦ Hair Care &nbsp;&nbsp;&nbsp; ✦ Facials &nbsp;&nbsp;&nbsp;</span>
 </div>
 
 <!-- SERVICES -->
@@ -291,10 +291,10 @@
       <div class="service-desc">Deep cleansing, brightening, and anti-aging facials using premium products.</div>
       <button class="service-book-btn">Book Now</button>
     </div>
-    <div class="service-card" onclick="openModal('Nail Art')">
+    <div class="service-card" onclick="openModal('Manicure & Pedicure')">
       <div class="service-icon">💅</div>
-      <div class="service-name">Nail Art</div>
-      <div class="service-desc">Manicure, pedicure, gel nails, and creative nail art designs.</div>
+      <div class="service-name">Manicure & Pedicure</div>
+      <div class="service-desc">Classic manicure, pedicure, gel nails, nail extensions, and nail art designs.</div>
       <button class="service-book-btn">Book Now</button>
     </div>
     <div class="service-card" onclick="openModal('Threading & Waxing')">
@@ -384,7 +384,7 @@
   <div class="gallery-grid">
     <div class="g-card" onclick="openModal('Hair Styling')"><div class="g-card-top c1">💇‍♀️</div><div class="g-label">Hair Colour</div></div>
     <div class="g-card" onclick="openModal('Bridal Package')"><div class="g-card-top c2">💍</div><div class="g-label">Bridal Glam</div></div>
-    <div class="g-card" onclick="openModal('Nail Art')"><div class="g-card-top c3">💅</div><div class="g-label">Nail Art</div></div>
+    <div class="g-card" onclick="openModal('Manicure & Pedicure')"><div class="g-card-top c3">💅</div><div class="g-label">Manicure &amp; Pedicure</div></div>
     <div class="g-card" onclick="openModal('Facial & Skin')"><div class="g-card-top c4">🌿</div><div class="g-label">Skin Glow</div></div>
   </div>
 </section>
@@ -445,7 +445,7 @@
           <select id="inlineService">
             <option>Hair Styling</option>
             <option>Facial &amp; Skin</option>
-            <option>Nail Art</option>
+            <option>Manicure &amp; Pedicure</option>
             <option>Bridal Package</option>
             <option>Threading &amp; Waxing</option>
             <option>Spa &amp; Massage</option>
@@ -516,7 +516,7 @@
         <select id="modalService">
           <option>Hair Styling</option>
           <option>Facial &amp; Skin</option>
-          <option>Nail Art</option>
+          <option>Manicure &amp; Pedicure</option>
           <option>Bridal Package</option>
           <option>Threading &amp; Waxing</option>
           <option>Spa &amp; Massage</option>
@@ -561,7 +561,7 @@
   })
 
   // ===== MODAL =====
-  const services = ['Hair Styling','Facial & Skin','Nail Art','Bridal Package','Threading & Waxing','Spa & Massage','Ear Lobe Piercing','Mole Removal']
+  const services = ['Hair Styling','Facial & Skin','Manicure & Pedicure','Bridal Package','Threading & Waxing','Spa & Massage','Ear Lobe Piercing','Mole Removal']
   function openModal(service){
     const overlay = document.getElementById('modalOverlay')
     overlay.classList.add('open')
