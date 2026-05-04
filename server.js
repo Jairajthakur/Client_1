@@ -26,7 +26,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname)));
 
 // ── Helper ────────────────────────────────────────────────────────────────────
 const OWNER_SECRET = 'hansika2025';
